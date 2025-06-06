@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react'
 function App() {
   const [images, setImages] = useState([])
   const [eingabeSeite, setEingabeSeite] = useState(1)
+  const [suche, setSuche] = useState("lolcats%20funny")
 
   useEffect(() => {
     console.log("useEffect wurde gestartet");
-    fetch(`http://localhost:3001/api/imagesearch/lolcats%20funny?page=${eingabeSeite}`) 
+    fetch(`http://localhost:3001/api/imagesearch/${suche}?page=${eingabeSeite}`) 
       .then(response => {
         if (!response.ok) {
           throw new Error('Netzwerkantwort war nicht ok');
@@ -18,12 +19,18 @@ function App() {
         setImages(data.images);
       })
       .catch(error => console.error('Fetch-Fehler:', error));
-  }, [eingabeSeite]);
+  }, [eingabeSeite, suche]);
 
   return (
     <div>
+      <br />
       <label>Gib eine Seitenummer ein:
       <input type="number" value={eingabeSeite} onChange={(e) => setEingabeSeite(Number(e.target.value))} />
+      </label>
+      <br />
+      <br />
+      <label>Gib deine Suche ein:
+      <input value={suche} onChange={(e) => setSuche((e.target.value))} />
       </label>
       <h1>Image Search Results</h1>
       <ul>
