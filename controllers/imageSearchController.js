@@ -10,7 +10,10 @@ export const searchImages = async (req, res) => {
   try {
     const response = await fetch(`https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}`);
     if (!response.ok) {
-      throw new Error(`Fehler bei der API-Anfrage: ${response.statusText}`);
+      console.error(`API-Fehler: ${response.status} - ${response.statusText}`);
+      console.log(`Request-URL: https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}`);
+      return res.status(response.status).json({ error: `API-Fehler: ${response.statusText}` });
+  
     }
     const data = await response.json();
 

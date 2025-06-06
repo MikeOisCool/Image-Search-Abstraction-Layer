@@ -1,3 +1,4 @@
+import './App.css';
 import { useEffect, useState } from 'react'
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
 
   useEffect(() => {
     console.log("useEffect wurde gestartet");
-    fetch(`http://localhost:3001/api/imagesearch/${suche}?page=${eingabeSeite}`) 
+    fetch(`http://localhost:3001/api/imagesearch/${encodeURIComponent(suche)}?page=${eingabeSeite}`) 
       .then(response => {
         if (!response.ok) {
           throw new Error('Netzwerkantwort war nicht ok');
@@ -22,7 +23,8 @@ function App() {
   }, [eingabeSeite, suche]);
 
   return (
-    <div>
+    <div style={{ padding: '20px' }}>
+      <h1>Image Search Results</h1>
       <br />
       <label>Gib eine Seitenummer ein:
       <input type="number" value={eingabeSeite} onChange={(e) => setEingabeSeite(Number(e.target.value))} />
@@ -32,16 +34,20 @@ function App() {
       <label>Gib deine Suche ein:
       <input value={suche} onChange={(e) => setSuche((e.target.value))} />
       </label>
-      <h1>Image Search Results</h1>
-      <ul>
+      <br />
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '10px'
+      }}>
         {images.map((image, index) => (
-          <li key={index}>
+          <div key={index} style={{ flex: '0 0 200px' }}>
             <a href={image.url} target="_blank" rel="noreferrer">
               <img src={image.thumbnail.url} alt={image.title} />
             </a>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   )
 }
