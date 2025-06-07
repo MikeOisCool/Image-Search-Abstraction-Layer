@@ -40,7 +40,19 @@ function App() {
         ⚠️ Es werden aktuell Fallback-Bilder angezeigt, da die API nicht erreichbar ist.
       </div>)}
       <label >Gib eine Seitenummer ein:&nbsp;
-        <input className="nummerFeld" type="number" value={eingabeSeite} onChange={(e) => setEingabeSeite(Number(e.target.value))} />
+        <input 
+        className="nummerFeld" 
+        type="number"
+        min="1" 
+        value={eingabeSeite} 
+        onChange={(e) => {
+          const val = Number(e.target.value)
+          if (val >=1) {
+            setEingabeSeite(val)
+          } else if (e.target.value === "") {
+            setEingabeSeite('')
+          }
+          }} />
       </label>
       <br />
       <br />
