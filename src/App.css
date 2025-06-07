@@ -1,42 +1,72 @@
-#root {
-  max-width: 1280px;
-  margin: 20 auto;
-  padding: 2rem;
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
+.site {
+  margin: 80px auto;
+  max-width: 1000px;  /* max Breite für bessere Lesbarkeit */
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1 {
+  margin-top: 0;
+  
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.pics {
+  display: flex;
+  flex-wrap: wrap;        /* Zeilenumbruch */
+  gap: 15px;              /* Abstand zwischen Bildern */
+  justify-content: center; /* Zentriert die Bilder */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.pic {
+  flex: 0 0 250px; /* Fixe Breite, nicht schrumpfen */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ad2424;
+  transition: transform 0.2s;
 }
 
-.card {
-  padding: 2em;
+.pic:hover {
+  transform: scale(1.05);
 }
 
-.read-the-docs {
-  color: #888;
+.pic img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+label {
+  font-size: 25px;
+  display: block;       /* Label auf eigene Zeile */
+  margin-bottom: 8px;   /* Abstand nach unten */
+  font-weight: bold;    /* Fett, damit es besser auffällt */
+  color: #df2020;
+}
+
+label input {
+  font-size: 25px;
+  padding: 6px 10px;   /* Innenabstand, damit Input nicht zu eng wirkt */
+  margin-top: 4px;     /* kleiner Abstand zum Label-Text */
+  border: 2px solid #ccc;
+  border-radius: 5px;  /* abgerundete Ecken */
+  width: 100%;         /* Input nimmt volle Breite ein */
+  max-width: 300px;    /* maximale Breite */
+  box-sizing: border-box; /* Padding und Border werden zur Gesamtbreite gerechnet */
+  transition: border-color 0.3s ease;
+}
+
+label input:focus {
+  border-color: #007bff;  /* Blauer Rahmen beim Fokussieren */
+  outline: none;          /* Standard-Umrandung weg */
+}
+
+.nummerFeld {
+  max-width: 80px
 }

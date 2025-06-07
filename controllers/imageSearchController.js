@@ -1,23 +1,50 @@
 import fetch from 'node-fetch';
+import fs from 'fs/promises';
+import path from 'path';
+
 let recentSearches = [];
-
-
 
 export const searchImages = async (req, res) => {
   const query = req.params.query;
   const page = parseInt(req.query.page) || 1;
 
   try {
-    const response = await fetch(`https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}`);
+    const response = await fetch(
+      `https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}&limit=5`
+    );
+
+    if (response.status === 502) {
+      console.error(`API-Fehler 502 - Bad Gateway`);
+      console.log(`Request-URL: https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}`);
+
+      try {
+        const filePath = path.join(process.cwd(), 'src', 'apiteil.json');
+        const fileData = await fs.readFile(filePath, 'utf8');
+        const fallbackData = JSON.parse(fileData);
+          console.log('Fallback URLs:', fallbackData.images.map(i => i.url));
+
+        recentSearches.unshift({ term: query, date: new Date() });
+        if (recentSearches.length > 10) recentSearches.pop();
+
+        return res.status(200).json({
+          query,
+          page,
+          images: fallbackData.images,
+          fallbackActive: true 
+        });
+      } catch (fileErr) {
+        console.error('Fehler beim Lesen oder Parsen der Fallback-JSON:', fileErr);
+        return res.status(500).json({ error: 'Fehler beim Laden der Fallback-Daten' });
+      }
+    }
+
     if (!response.ok) {
       console.error(`API-Fehler: ${response.status} - ${response.statusText}`);
-      console.log(`Request-URL: https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}`);
       return res.status(response.status).json({ error: `API-Fehler: ${response.statusText}` });
-  
     }
+
     const data = await response.json();
 
-    // Suche speichern
     recentSearches.unshift({ term: query, date: new Date() });
     if (recentSearches.length > 10) recentSearches.pop();
 
@@ -27,12 +54,11 @@ export const searchImages = async (req, res) => {
       images: data.images
     });
   } catch (error) {
-    console.error('Fehler bei der Bildersuche:', error);
-    res.status(500).json({ error: 'Fehler bei der API-Anfrage' });
+    console.error('Fehler beim Abrufen der Daten:', error);
+    return res.status(500).json({ error: 'Interner Serverfehler' });
   }
 };
 
-// Getter-Funktion für die letzten Suchanfragen
 export const getRecentSearches = (req, res) => {
   const formatted = recentSearches.map(entry => ({
     term: entry.term,
