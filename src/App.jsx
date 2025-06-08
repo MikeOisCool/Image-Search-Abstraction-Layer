@@ -55,7 +55,7 @@ function App() {
     <div className="site" >
       <div>
         <h1>Image Search</h1>
-        <br />
+       
         {fallbackActive && (
           <div className="fallback" style={{ color: 'orange', marginBottom: '1em' }}>
             ⚠️ Es werden aktuell Fallback-Bilder angezeigt, da die API nicht erreichbar ist. 502 Bad Gateway!
