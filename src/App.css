@@ -33,7 +33,7 @@ h1 {
 }
 
 .pic:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .pic img {
@@ -64,9 +64,21 @@ label input {
 
 label input:focus {
   border-color: #007bff;  /* Blauer Rahmen beim Fokussieren */
-  outline: none;          /* Standard-Umrandung weg */
+  outline: none;       /*    Standard-Umrandung weg */
 }
 
 .nummerFeld {
   max-width: 80px
+}
+
+.research {
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 16px;
+
+}
+.searchBox {
+  margin-top: 5px;
+  padding-left: 10px;
+  color: grey
 }
