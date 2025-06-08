@@ -27,11 +27,11 @@ h1 {
 
 .pics {
  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 15px;
   justify-content: center;
   justify-items: center;
-  max-width: 600px;
+  max-width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -49,10 +49,11 @@ h1 {
 }
 
 .pic img {
-  width: 190px;
-  height: 190px;
+  width: 100%;
+  height: auto;
   object-fit: cover;
   display: block;
+  aspect-ratio: 1 / 1;
 }
 
 label {
