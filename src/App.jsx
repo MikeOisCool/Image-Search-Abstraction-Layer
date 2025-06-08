@@ -57,7 +57,7 @@ function App() {
         <h1>Image Search</h1>
         <br />
         {fallbackActive && (
-          <div style={{ color: 'orange', marginBottom: '1em' }}>
+          <div className="fallback" style={{ color: 'orange', marginBottom: '1em' }}>
             ⚠️ Es werden aktuell Fallback-Bilder angezeigt, da die API nicht erreichbar ist. 502 Bad Gateway!
           </div>)}
         <label >Gib eine Seitenummer ein:&nbsp;
@@ -84,7 +84,7 @@ function App() {
 
         {/* Recent Searches  */}
         <div>
-          <h2 className='research' onClick={() => { setIsExpanded(!isExpanded) }}>Hier klicken! Letzte Suchanfragen! Hier klicken!</h2>
+          <h2 className='research' onClick={() => { setIsExpanded(!isExpanded) }}>Hier klicken! Letzte 10 Suchanfragen! Hier klicken!</h2>
           <div className={`recentSearchesContainer ${isExpanded ? 'expanded' : ''}`}>
             <ul>
               {recentSearches.map((item, index) => (

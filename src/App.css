@@ -1,20 +1,20 @@
-html body {
+html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   display: flex;
   justify-content: center;
+  background-color: #242424;
 }
 
-
 .site {
-  margin: 80px auto;
+  margin: 20px auto;
   max-width: 6000px;  /* max Breite für bessere Lesbarkeit */
-  
   padding: 0 15px;
   box-sizing: border-box;
   text-align: center;
 }
+
 .size > * {
   margin-left: auto;
   margin-right: auto;
@@ -22,12 +22,19 @@ html body {
 
 h1 {
   margin-top: 0;
-  
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+.fallback {
+  color: orange;
+  margin-bottom: 1em;
+  width: 550px;
 }
 
 .pics {
- display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   gap: 15px;
   justify-content: center;
   justify-items: center;
@@ -74,15 +81,16 @@ label input {
   max-width: 300px;    /* maximale Breite */
   box-sizing: border-box; /* Padding und Border werden zur Gesamtbreite gerechnet */
   transition: border-color 0.3s ease;
+  cursor:pointer;
 }
 
 label input:focus {
   border-color: #007bff;  /* Blauer Rahmen beim Fokussieren */
-  outline: none;       /*    Standard-Umrandung weg */
+  outline: none;          /* Standard-Umrandung weg */
 }
 
 .nummerFeld {
-  max-width: 80px
+  max-width: 80px;
 }
 
 .research {
@@ -95,8 +103,8 @@ label input:focus {
   border-radius: 5px;
   font-size: 20px;
   text-align: center;
-
 }
+
 .recentSearchesContainer {
   overflow: hidden;
   max-height: 0;

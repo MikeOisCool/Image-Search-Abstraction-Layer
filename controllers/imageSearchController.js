@@ -10,12 +10,12 @@ export const searchImages = async (req, res) => {
 
   try {
     const response = await fetch(
-      `https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}&limit=5`
+      `https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}`
     );
 
     if (response.status === 502) {
       console.error(`API-Fehler 502 - Bad Gateway`);
-      console.log(`Request-URL: https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}`);
+      // console.log(`Request-URL: https://image-search-abstraction-layer.freecodecamp.rocks/query/${encodeURIComponent(query)}?page=${page}`);
 
       try {
         const filePath = path.join(process.cwd(), 'src', 'apiteil.json');
