@@ -97,7 +97,7 @@ label input {
   cursor:pointer;
 }
 
-label input:focus {
+input:focus {
   border-color: #007bff;  /* Blauer Rahmen beim Fokussieren */
   outline: none;          /* Standard-Umrandung weg */
 }
@@ -123,7 +123,9 @@ label input:focus {
   max-height: 0;
   transition: max-height 0.5s ease, padding 0.5s ease;
   padding: 0 10px;
+  
 }
+
 
 .recentSearchesContainer.expanded {
   max-height: 500px; 
@@ -143,4 +145,33 @@ label input:focus {
   font-size: 18px;
   padding: 5px 0;
   border-bottom: 1px solid #ccc;
+}
+
+.search-row {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.search-row input {
+  font-size: 25px;
+  padding: 6px 10px;
+  text-align: center;
+  border-radius: 5px;
+  flex-grow: 1;
+  margin-right: 8px;
+}
+
+.search-row button {
+  flex-shrink: 0;
+  font-size: 25px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:focus {
+  border-color: #007bff;
+  outline: none;
+  border-radius: 5px;
 }

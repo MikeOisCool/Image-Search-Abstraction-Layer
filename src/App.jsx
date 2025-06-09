@@ -8,6 +8,11 @@ function App() {
   const [fallbackActive, setFallbackActive] = useState(false)
   const [recentSearches, setRecentSearches] = useState([])
   const [isExpanded, setIsExpanded] = useState(false);
+  const [searchInput, setSearchInput] = useState(suche);
+
+
+
+
 
   useEffect(() => {
     // console.log("useEffect wurde gestartet");
@@ -32,7 +37,9 @@ function App() {
 
   }, [eingabeSeite, suche]);
 
+
   useEffect(() => {
+    console.log("useEffect für recentSearches startet");
     fetch('http://localhost:3001/api/recentsearches')
       .then(response => {
         if (!response.ok) {
@@ -42,12 +49,21 @@ function App() {
       })
       .then(data => {
         setRecentSearches(data);
+
+        console.log('RecentSearches (Frontend):', data);
       })
       .catch(error => {
         console.error('Fetch-Fehler:', error)
       });
   }, [])
 
+  const handleSearch = () => {
+    setSuche(searchInput);
+    setRecentSearches(prev => [
+      { term: searchInput, date: new Date().toISOString() },
+      ...prev.filter(item => item.term !== searchInput)
+    ].slice(0, 10))
+  }
 
 
   return (
@@ -55,7 +71,7 @@ function App() {
     <div className="site" >
       <div>
         <h1>Image Search</h1>
-       
+
         {fallbackActive && (
           <div className="fallback" style={{ color: 'orange', marginBottom: '1em' }}>
             ⚠️ Es werden aktuell Fallback-Bilder angezeigt, da die API nicht erreichbar ist. 502 Bad Gateway!
@@ -75,16 +91,30 @@ function App() {
               }
             }} />
         </label>
-        <br />
-        <br />
+    
+
         <label>Gib deine Suche ein:     &nbsp;
-          <input value={suche} onChange={(e) => setSuche((e.target.value))} />
+          
         </label>
+        <div className="search-row">
+          <input
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+              }
+            }}
+          />
+          <button type="button" onClick={handleSearch}>Suchen</button>
+        </div>
+
 
 
         {/* Recent Searches  */}
         <div>
           <h2 className='research' onClick={() => { setIsExpanded(!isExpanded) }}>Hier klicken! Letzte 10 Suchanfragen! Hier klicken!</h2>
+
           <div className={`recentSearchesContainer ${isExpanded ? 'expanded' : ''}`}>
             <ul>
               {recentSearches.map((item, index) => (

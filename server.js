@@ -13,3 +13,7 @@ app.get('/api/recentsearches', getRecentSearches);
 app.listen(port, () => {
   console.log(`Server läuft auf Port ${port}`);
 });
+
+export default app;
+
+

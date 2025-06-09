@@ -5,6 +5,7 @@ import path from 'path';
 let recentSearches = [];
 
 export const searchImages = async (req, res) => {
+  console.log("searchImages wurde aufgerufen mit:", req.params.query);
   const query = req.params.query;
   const page = parseInt(req.query.page) || 1;
 
@@ -30,7 +31,7 @@ export const searchImages = async (req, res) => {
           query,
           page,
           images: fallbackData.images,
-          fallbackActive: true 
+          fallbackActive: true
         });
       } catch (fileErr) {
         console.error('Fehler beim Lesen oder Parsen der Fallback-JSON:', fileErr);
@@ -60,6 +61,9 @@ export const searchImages = async (req, res) => {
 };
 
 export const getRecentSearches = (req, res) => {
+  console.log("getRecentSearches wurde aufgerufen");
+  console.log(recentSearches)
+  console.log('Aktuelle recentSearches:', recentSearches);
   const formatted = recentSearches.map(entry => ({
     term: entry.term,
     date: entry.date.toISOString()
