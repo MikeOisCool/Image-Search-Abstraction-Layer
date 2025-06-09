@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../server.js';
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 
 import { searchImages } from '../controllers/imageSearchController.js';
 
@@ -20,5 +20,26 @@ describe('Recent Searches API', () => {
     expect(firstSearch).toHaveProperty('term');
     expect(firstSearch).toHaveProperty('date');
     expect(new Date(firstSearch.date).toString()).not.toBe('Invalid Date');
+  });
+});
+
+describe('Image Search API', () => {
+  test('should activate fallback when external API returns 502', async () => {
+    // Mock fetch, damit es einen 502-Fehler liefert
+    vi.mock('node-fetch', async () => {
+      return {
+        default: async () => ({
+          status: 502,
+          ok: false,
+          statusText: 'Bad Gateway'
+        })
+      };
+    });
+
+    const response = await request(app).get('/api/imagesearch/testfallback?page=1');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.fallbackActive).toBe(true);
+    expect(Array.isArray(response.body.images)).toBe(true);
   });
 });

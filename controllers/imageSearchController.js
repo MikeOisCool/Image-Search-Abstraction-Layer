@@ -31,7 +31,7 @@ export const searchImages = async (req, res) => {
           query,
           page,
           images: fallbackData.images,
-          fallbackActive: true
+          fallbackActive: fallbackData.fallbackActive ?? true
         });
       } catch (fileErr) {
         console.error('Fehler beim Lesen oder Parsen der Fallback-JSON:', fileErr);
